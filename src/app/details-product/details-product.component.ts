@@ -18,12 +18,6 @@ export class DetailsProductComponent implements OnInit {
 
   
   ngOnInit() {
-    
-  }
-  onSearchChange(searchValue: string): void {  
-    this.myId = searchValue;
-  }
-  afficherAll(){
     this.productsService.getInfoAllProducts().subscribe(data => {
       this.products = data;
       console.log(data);
@@ -32,13 +26,15 @@ export class DetailsProductComponent implements OnInit {
       alert('failed');
     });
   }
+  
+  afficherAll(){
+    this.oneProduct = undefined;
+  }
 
   afficherOne(id){
-    this.products = [];
-    console.log(this.myId);
+    console.log(id);
     this.productsService.getInfoProduct(id).subscribe(data => {
       this.oneProduct = data;
-      console.log(data);
     },
     (err) => {
       alert('failed');

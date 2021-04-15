@@ -1,28 +1,52 @@
 <div id="infosProduct">
     <h1>Page d'affichage du produit</h1>
     <button class="recupData" (click)="afficherAll()">Tout les produits</button>
-    <input class="inputProduct" type="text" (keyup.enter)="afficherOne(myId)" (input)="onSearchChange($event.target.value)"/>
+    <select [(ngModel)]="myId" matNativeControl required> <!-- (keyup.enter)="afficherOne(myId)" -->
+      <option *ngFor="let item of products" [ngValue]="item.id">{{item.name}}</option>
+    </select>
     <button class="recupData" (click)="afficherOne(myId)">Je veux ce produit</button>
-    <ul *ngFor="let product of products">
-        <li>
-           Id : {{product.id}}
-        </li>
-        <li>
-           Nom : {{product.name}}
-        </li>
-        <li>
-           Prix : {{product.price}}
-        </li>
-    </ul>
-    <ul *ngIf="oneProduct!==undefined">
-        <li>
-           Id : {{oneProduct.id}}
-        </li>
-        <li>
-           Nom : {{oneProduct.name}}
-        </li>
-        <li>
-           Prix : {{oneProduct.price}}
-        </li>
-    </ul>
+    <div *ngIf="oneProduct==undefined">
+      <ul *ngFor="let product of products">
+         <li>
+            Nom : {{product.name}}
+         </li>
+         <li>
+            Prix : {{product.price}}
+         </li>
+         <li>
+            Prix en promotion : {{product.discount}}
+         </li>
+         <li>
+            Pourcentage de promotion : {{product.discountPercentage}}
+         </li>
+         <li>
+            Quantité en stock : {{product.quantityInStock}}
+         </li>
+         <li>
+            Commentaires : {{product.comments}}
+         </li>
+      </ul>
+    </div>
+    <div *ngIf="oneProduct!==undefined">
+      <ul >
+         <li>
+            Nom : {{oneProduct.name}}
+         </li>
+         <li>
+            Prix : {{oneProduct.price}}
+         </li>
+         <li>
+            Prix en promotion : {{oneProduct.discount}}
+         </li>
+         <li>
+            Pourcentage de promotion : {{oneProduct.discountPercentage}}
+         </li>
+         <li>
+            Quantité en stock : {{oneProduct.quantityInStock}}
+         </li>
+         <li>
+            Commentaires : {{oneProduct.comments}}
+         </li>
+      </ul>
+    </div>
 </div>
