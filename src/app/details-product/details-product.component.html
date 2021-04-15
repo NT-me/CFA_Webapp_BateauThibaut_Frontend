@@ -1,5 +1,8 @@
 <div id="infosProduct">
     <h1>Page d'affichage du produit</h1>
+    <button class="recupData" (click)="afficherAll()">Tout les produits</button>
+    <input class="inputProduct" type="text" (keyup.enter)="afficherOne(myId)" (input)="onSearchChange($event.target.value)"/>
+    <button class="recupData" (click)="afficherOne(myId)">Je veux ce produit</button>
     <ul *ngFor="let product of products">
         <li>
            Id : {{product.id}}
@@ -9,6 +12,17 @@
         </li>
         <li>
            Prix : {{product.price}}
+        </li>
+    </ul>
+    <ul *ngIf="oneProduct!==undefined">
+        <li>
+           Id : {{oneProduct.id}}
+        </li>
+        <li>
+           Nom : {{oneProduct.name}}
+        </li>
+        <li>
+           Prix : {{oneProduct.price}}
         </li>
     </ul>
 </div>

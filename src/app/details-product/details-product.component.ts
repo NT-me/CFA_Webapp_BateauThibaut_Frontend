@@ -10,14 +10,21 @@ import { ProductsService } from '../services/products.service';
 export class DetailsProductComponent implements OnInit {
 
   products: any;
-
+  oneProduct: any;
+  myId: any;
   constructor(public productsService : ProductsService) {
     this.products = [];
    }
 
   
   ngOnInit() {
-    this.productsService.getJSON().subscribe(data => {
+    
+  }
+  onSearchChange(searchValue: string): void {  
+    this.myId = searchValue;
+  }
+  afficherAll(){
+    this.productsService.getInfoAllProducts().subscribe(data => {
       this.products = data;
       console.log(data);
     },
@@ -26,4 +33,15 @@ export class DetailsProductComponent implements OnInit {
     });
   }
 
+  afficherOne(id){
+    this.products = [];
+    console.log(this.myId);
+    this.productsService.getInfoProduct(id).subscribe(data => {
+      this.oneProduct = data;
+      console.log(data);
+    },
+    (err) => {
+      alert('failed');
+    });
+  }
 }
