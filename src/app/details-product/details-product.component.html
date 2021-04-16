@@ -6,26 +6,63 @@
     </select>
     <button class="recupData" (click)="afficherOne(myId)">Je veux ce produit</button>
     <div *ngIf="oneProduct==undefined">
-      <ul *ngFor="let product of products">
-         <li>
-            Nom : {{product.name}}
-         </li>
-         <li>
-            Prix : {{product.price}}
-         </li>
-         <li>
-            Prix en promotion : {{product.discount}}
-         </li>
-         <li>
-            Pourcentage de promotion : {{product.discountPercentage}}
-         </li>
-         <li>
-            Quantité en stock : {{product.quantityInStock}}
-         </li>
-         <li>
-            Commentaires : {{product.comments}}
-         </li>
-      </ul>
+      <table>
+         <tr> 
+            <th> Poissons </th>
+         </tr>
+         <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+         <tr *ngFor="let product of poissons">
+               <td>{{product.name}}</td>
+               <td>{{product.price}}</td>
+               <td>{{product.discount}}</td>
+               <td>{{product.discountPercentage}}</td>
+               <td>{{product.quantityInStock}}</td>
+               <td>{{product.comments}}</td>
+         </tr>
+      </table>
+
+      <table>
+         <tr> 
+            <th> Coquillages </th>
+         </tr>
+         <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+         <tr *ngFor="let product of coquillages">
+               <td>{{product.name}}</td>
+               <td>{{product.price}}</td>
+               <td>{{product.discount}}</td>
+               <td>{{product.discountPercentage}}</td>
+               <td>{{product.quantityInStock}}</td>
+               <td>{{product.comments}}</td>
+         </tr>
+      </table>
+
+      <table>
+         <tr> 
+            <th> Crustaces </th>
+         </tr>
+         <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+         <tr *ngFor="let product of crustaces">
+               <td>{{product.name}}</td>
+               <td>{{product.price}}</td>
+               <td>{{product.discount}}</td>
+               <td>{{product.discountPercentage}}</td>
+               <td>{{product.quantityInStock}}</td>
+               <td>{{product.comments}}</td>
+         </tr>
+      </table>
+      
     </div>
     <div *ngIf="oneProduct!==undefined">
       <ul >
