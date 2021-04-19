@@ -1,15 +1,59 @@
 <div>
-    <h1>Modification Simultanés de produits</h1>
-</div>
+      <table>
+         <tr> 
+            <th> Poissons </th>
+         </tr>
+         <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+         <tr *ngFor="let product of poissons">
+               <td>{{product.name}}</td>
+               <td>{{product.price}}</td>
+               <td>{{product.discount}}</td>
+               <td>{{product.discountPercentage}}</td>
+               <td>{{product.quantityInStock}}</td>
+               <td>{{product.comments}}</td>
+         </tr>
+      </table>
 
-<div>
-    <h2>Crustacés</h2>
-</div>
+      <table>
+         <tr> 
+            <th> Coquillages </th>
+         </tr>
+         <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+         <tr *ngFor="let product of coquillages">
+               <td>{{product.name}}</td>
+               <td>{{product.price}}</td>
+               <td>{{product.discount}}</td>
+               <td>{{product.discountPercentage}}</td>
+               <td>{{product.quantityInStock}}</td>
+               <td>{{product.comments}}</td>
+         </tr>
+      </table>
 
-<div>
-    <h2>Poissons</h2>
-</div>
-
-<div>
-    <h2>Fruits de Mer</h2>
-</div>
+      <table>
+         <tr> 
+            <th> Crustaces </th>
+         </tr>
+         <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+         <tr *ngFor="let product of crustaces">
+               <td>{{product.name}}</td>
+               <td>{{product.price}}</td>
+               <td>{{product.discount}}</td>
+               <td>{{product.discountPercentage}}</td>
+               <td>{{product.quantityInStock}}</td>
+               <td>{{product.comments}}</td>
+         </tr>
+      </table>
+      
+    </div>
