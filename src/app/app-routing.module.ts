@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: 'products', component: AllProductComponent},
   { path: 'manage', component: ManageStockComponent},
   { path: 'bi', component: BiComponent}
-
 ];
 
 @NgModule({
