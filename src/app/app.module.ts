@@ -8,13 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AllProductComponent } from './all-product/all-product.component';
 import { ManageStockComponent } from './manage-stock/manage-stock.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DetailsProductComponent,
     AllProductComponent,
-    ManageStockComponent
+    ManageStockComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
