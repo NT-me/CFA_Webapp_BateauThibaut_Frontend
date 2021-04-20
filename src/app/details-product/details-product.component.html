@@ -1,89 +1,31 @@
-<div id="infosProduct">
-    <h1>Page d'affichage du produit</h1>
-    <button class="recupData" (click)="afficherAll()">Tout les produits</button>
-    <select [(ngModel)]="myId" matNativeControl required> <!-- (keyup.enter)="afficherOne(myId)" -->
-      <option *ngFor="let item of products" [ngValue]="item.id">{{item.name}}</option>
-    </select>
-    <button class="recupData" (click)="afficherOne(myId)">Je veux ce produit</button>
-    <div *ngIf="oneProduct==undefined">
-      <table>
-         <tr> 
-            <th> Poissons </th>
-         </tr>
-         <tr>
-            <th *ngFor="let column of headers">
-               {{column}}
-            </th>
-         </tr>
-         <tr *ngFor="let product of poissons">
-               <td>{{product.name}}</td>
-               <td>{{product.price}}</td>
-               <td>{{product.discount}}</td>
-               <td>{{product.discountPercentage}}</td>
-               <td>{{product.quantityInStock}}</td>
-               <td>{{product.comments}}</td>
-         </tr>
-      </table>
-
-      <table>
-         <tr> 
-            <th> Coquillages </th>
-         </tr>
-         <tr>
-            <th *ngFor="let column of headers">
-               {{column}}
-            </th>
-         </tr>
-         <tr *ngFor="let product of coquillages">
-               <td>{{product.name}}</td>
-               <td>{{product.price}}</td>
-               <td>{{product.discount}}</td>
-               <td>{{product.discountPercentage}}</td>
-               <td>{{product.quantityInStock}}</td>
-               <td>{{product.comments}}</td>
-         </tr>
-      </table>
-
-      <table>
-         <tr> 
-            <th> Crustaces </th>
-         </tr>
-         <tr>
-            <th *ngFor="let column of headers">
-               {{column}}
-            </th>
-         </tr>
-         <tr *ngFor="let product of crustaces">
-               <td>{{product.name}}</td>
-               <td>{{product.price}}</td>
-               <td>{{product.discount}}</td>
-               <td>{{product.discountPercentage}}</td>
-               <td>{{product.quantityInStock}}</td>
-               <td>{{product.comments}}</td>
-         </tr>
-      </table>
-      
-    </div>
-    <div *ngIf="oneProduct!==undefined">
-      <ul >
-         <li>
-            Nom : {{oneProduct.name}}
-         </li>
-         <li>
-            Prix : {{oneProduct.price}}
-         </li>
-         <li>
-            Prix en promotion : {{oneProduct.discount}}
-         </li>
-         <li>
-            Pourcentage de promotion : {{oneProduct.discountPercentage}}
-         </li>
-         <li>
-            Quantité en stock : {{oneProduct.quantityInStock}}
-         </li>
-         <li>
-            Commentaires : {{oneProduct.comments}}
-         </li>
-      </ul>
+<div class="infosProduct">
+    <div>
+      <h1 class="titleDetail">Détail du produit au choix</h1>
+      <p class="subtitleDetail">Veuillez saisir le produit dont vous voulez les informations</p>
+      <select class="selectDetail" [(ngModel)]="myId" (change)="afficherOne(myId)">
+         <option *ngFor="let item of products" [ngValue]="item.id" >{{item.name}}</option>
+      </select>         
+      <br>
+    </div> 
+    <div class="productDiv" *ngIf="product!==undefined">
+         <p>
+            Nom : {{product.name}}
+         </p>
+         <p>
+            Prix : {{product.price}} €
+         </p>
+         <p>
+            Prix en promotion : {{product.discount}} €
+         </p>
+         <p>
+            Pourcentage de promotion : {{product.discountPercentage}} %
+         </p>
+         <input class="myPromoInput" placeholder="Nouvelle promotion">
+         <br>
+         <br>
+         <button class="myPromoButton">Modifier promotion</button>
+         <p>
+            Quantité en stock : {{product.quantityInStock}}
+         </p>
     </div>
 </div>

@@ -1,8 +1,7 @@
-<div>
-      <table>
-         <tr> 
-            <th> Poissons </th>
-         </tr>
+<div class="allProduct">
+   <div class="divCategory">
+         <h1 class="categoryTitle"> Poissons</h1>
+         <table class="myTable">
          <tr>
             <th *ngFor="let column of headers">
                {{column}}
@@ -16,12 +15,11 @@
                <td>{{product.quantityInStock}}</td>
                <td>{{product.comments}}</td>
          </tr>
-      </table>
-
-      <table>
-         <tr> 
-            <th> Coquillages </th>
-         </tr>
+         </table>
+   </div> 
+   <div class="divCategory">
+         <h1 class="categoryTitle"> Coquillages</h1>
+         <table class="myTable">
          <tr>
             <th *ngFor="let column of headers">
                {{column}}
@@ -35,12 +33,11 @@
                <td>{{product.quantityInStock}}</td>
                <td>{{product.comments}}</td>
          </tr>
-      </table>
-
-      <table>
-         <tr> 
-            <th> Crustaces </th>
-         </tr>
+         </table>
+   </div>
+   <div class="divCategory">
+      <h1 class="categoryTitle"> Crustaces</h1>
+      <table class="myTable">
          <tr>
             <th *ngFor="let column of headers">
                {{column}}
@@ -54,6 +51,6 @@
                <td>{{product.quantityInStock}}</td>
                <td>{{product.comments}}</td>
          </tr>
-      </table>
-      
-    </div>
+         </table>
+   </div>  
+</div>

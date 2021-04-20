@@ -16,7 +16,7 @@ export class DetailsProductComponent implements OnInit {
 
   headers: any;
   categories: any
-  oneProduct: any;
+  product: any;
   myId: any;
 
   constructor(public productsService : ProductsService) {
@@ -37,33 +37,16 @@ export class DetailsProductComponent implements OnInit {
     (err) => {
       alert('failed');
     });
-    this.productsService.getInfoAllPoissonsProducts().subscribe(data => {
-      this.poissons = data;
-    },
-    (err) => {
-      alert('failed');
-    });
-    this.productsService.getInfoAllCoquillagesProducts().subscribe(data => {
-      this.coquillages = data;
-    },
-    (err) => {
-      alert('failed');
-    });
-    this.productsService.getInfoAllCrustacesProducts().subscribe(data => {
-      this.crustaces = data;
-    },
-    (err) => {
-      alert('failed');
-    });
+    
   }
   
   afficherAll(){
-    this.oneProduct = undefined;
+    this.product = undefined;
   }
 
   afficherOne(id){
     this.productsService.getInfoProduct(id).subscribe(data => {
-      this.oneProduct = data;
+      this.product = data;
     },
     (err) => {
       alert('failed');

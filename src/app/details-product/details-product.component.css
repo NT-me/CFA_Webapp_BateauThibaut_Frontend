@@ -1,6 +1,41 @@
-.recupData{
-    margin-top: 10px;
+.infosProduct{
+    margin-top: 5%;
+    text-align: center;
+}
+
+.productDiv{
+    margin-top: 2%;
+    width: 30%;
+    text-align: center;
+    display: inline-block;
+    border: 3px double #2164ff;
+}
+
+.myPromoButton{
+    background-color: #2164ff;
+    color: white;
+    height: 30px;
+    width: 150px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.myPromoInput{
+    width: 50%;
 }
 .myList{
-    margin-top: 20px;
+    margin-top: 0px;
+}
+
+.titleDetail{
+    font-size: 40px;
+}
+
+.subtitleDetail{
+    font-size: 20px;
+    margin-bottom: 2%;
+}
+
+.selectDetail{
+    width: 20%;
 }
