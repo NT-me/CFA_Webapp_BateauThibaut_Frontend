@@ -1,59 +1,64 @@
-<div>
-      <table>
-         <tr> 
-            <th> Poissons </th>
-         </tr>
-         <tr>
-            <th *ngFor="let column of headers">
-               {{column}}
-            </th>
-         </tr>
-         <tr *ngFor="let product of poissons">
-               <td>{{product.name}}</td>
-               <td>{{product.price}}</td>
-               <td>{{product.discount}}</td>
-               <td>{{product.discountPercentage}}</td>
-               <td>{{product.quantityInStock}}</td>
-               <td>{{product.comments}}</td>
-         </tr>
-      </table>
+<div ng-app="update" ng-controller="controller">
+    <table>
+        <tr> 
+           <th> Poissons </th>
+        </tr>
+        <tr>
+           <th *ngFor="let column of headers">
+              {{column}}
+           </th>
+        </tr>
+        <tr *ngFor="let product of poissons">
+              <td>{{product.name}}</td>
+              <td>{{product.price}}</td>
+              <td>{{product.discount}}</td>
+              <td>{{product.discountPercentage}}</td>
+              <td>{{product.quantityInStock}}</td>
+              <td>{{product.comments}}</td>
+              <td><input type="text" placeholder="..." ng-model="ajoutStock" (change)="changeStock()"></td>
+              <td><input type="text" placeholder="%" ng-model="discount" (change)="changeDiscount()"></td>
+        </tr>
+     </table>
 
-      <table>
-         <tr> 
-            <th> Coquillages </th>
-         </tr>
-         <tr>
-            <th *ngFor="let column of headers">
-               {{column}}
-            </th>
-         </tr>
-         <tr *ngFor="let product of coquillages">
-               <td>{{product.name}}</td>
-               <td>{{product.price}}</td>
-               <td>{{product.discount}}</td>
-               <td>{{product.discountPercentage}}</td>
-               <td>{{product.quantityInStock}}</td>
-               <td>{{product.comments}}</td>
-         </tr>
-      </table>
-
-      <table>
-         <tr> 
-            <th> Crustaces </th>
-         </tr>
-         <tr>
-            <th *ngFor="let column of headers">
-               {{column}}
-            </th>
-         </tr>
-         <tr *ngFor="let product of crustaces">
-               <td>{{product.name}}</td>
-               <td>{{product.price}}</td>
-               <td>{{product.discount}}</td>
-               <td>{{product.discountPercentage}}</td>
-               <td>{{product.quantityInStock}}</td>
-               <td>{{product.comments}}</td>
-         </tr>
-      </table>
-      
-    </div>
+     <table>
+        <tr> 
+           <th> Coquillages </th>
+        </tr>
+        <tr>
+           <th *ngFor="let column of headers">
+              {{column}}
+           </th>
+        </tr>
+        <tr *ngFor="let product of coquillages">
+              <td>{{product.name}}</td>
+              <td>{{product.price}}</td>
+              <td>{{product.discount}}</td>
+              <td>{{product.discountPercentage}}</td>
+              <td>{{product.quantityInStock}}</td>
+              <td>{{product.comments}}</td>
+              <td><input type="text" placeholder="..." ng-model="ajoutStock" (change)="changeStock()"></td>
+              <td><input type="text" placeholder="%" ng-model="discount" (change)="changeDiscount()"></td>
+        </tr>
+     </table>
+     <table>
+        <tr> 
+           <th> Crustaces </th>
+        </tr>
+        <tr>
+           <th *ngFor="let column of headers">
+              {{column}}
+           </th>
+        </tr>
+        <tr *ngFor="let product of crustaces">
+              <td>{{product.name}}</td>
+              <td>{{product.price}}</td>
+              <td>{{product.discount}}</td>
+              <td>{{product.discountPercentage}}</td>
+              <td>{{product.quantityInStock}}</td>
+              <td>{{product.comments}}</td>
+              <td><input type="text" placeholder="..." [(ngModel)]="ajoutStock" (change)="changeStock()"></td>
+              <td><input type="text" placeholder="%" [(ngModel)]="discount" (change)="changeDiscount()"></td>
+        </tr>
+     </table>
+     <button type="button" (click)="sendManageStock()" >Modifier</button>
+</div>
