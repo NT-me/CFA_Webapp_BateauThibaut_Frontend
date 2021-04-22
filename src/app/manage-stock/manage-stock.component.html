@@ -1,64 +1,87 @@
-<div ng-app="update" ng-controller="controller">
-    <table>
-        <tr> 
-           <th> Poissons </th>
-        </tr>
-        <tr>
-           <th *ngFor="let column of headers">
-              {{column}}
-           </th>
-        </tr>
-        <tr *ngFor="let product of poissons">
-              <td>{{product.name}}</td>
-              <td>{{product.price}}</td>
-              <td>{{product.discount}}</td>
-              <td>{{product.discountPercentage}}</td>
-              <td>{{product.quantityInStock}}</td>
-              <td>{{product.comments}}</td>
-              <td><input type="text" placeholder="..." ng-model="ajoutStock" (change)="changeStock()"></td>
-              <td><input type="text" placeholder="%" ng-model="discount" (change)="changeDiscount()"></td>
-        </tr>
-     </table>
-
-     <table>
-        <tr> 
-           <th> Coquillages </th>
-        </tr>
-        <tr>
-           <th *ngFor="let column of headers">
-              {{column}}
-           </th>
-        </tr>
-        <tr *ngFor="let product of coquillages">
-              <td>{{product.name}}</td>
-              <td>{{product.price}}</td>
-              <td>{{product.discount}}</td>
-              <td>{{product.discountPercentage}}</td>
-              <td>{{product.quantityInStock}}</td>
-              <td>{{product.comments}}</td>
-              <td><input type="text" placeholder="..." ng-model="ajoutStock" (change)="changeStock()"></td>
-              <td><input type="text" placeholder="%" ng-model="discount" (change)="changeDiscount()"></td>
-        </tr>
-     </table>
-     <table>
-        <tr> 
-           <th> Crustaces </th>
-        </tr>
-        <tr>
-           <th *ngFor="let column of headers">
-              {{column}}
-           </th>
-        </tr>
-        <tr *ngFor="let product of crustaces">
-              <td>{{product.name}}</td>
-              <td>{{product.price}}</td>
-              <td>{{product.discount}}</td>
-              <td>{{product.discountPercentage}}</td>
-              <td>{{product.quantityInStock}}</td>
-              <td>{{product.comments}}</td>
-              <td><input type="text" placeholder="..." [(ngModel)]="ajoutStock" (change)="changeStock()"></td>
-              <td><input type="text" placeholder="%" [(ngModel)]="discount" (change)="changeDiscount()"></td>
-        </tr>
-     </table>
-     <button type="button" (click)="sendManageStock()" >Modifier</button>
+<div class="allProduct" ng-app="update" ng-controller="controller">
+   <div class="divCategory">
+         <h1 class="categoryTitle"> Poissons</h1>
+            <div class="helpDiv">Pour un Achat (A) : remplir "Ajouter stock"<br>
+         Pour un Retrait par Vente (RPV) : remplir "Retirer stock" PUIS mettre le prix de la revente<br>
+         Pour un Retrait par Invendu (RPI) : remplir "Retirer stock" PUIS mettre 0 au prix de la revente</div>
+         <table class="myTable">
+         <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+         <tr *ngFor="let product of poissons">
+               <td>{{product.name}}</td>
+               <td>{{product.price}}€</td>
+               <td>{{product.discount}}€</td>
+               <td>{{product.discountPercentage}}%</td>
+               <td>{{product.quantityInStock}}</td>
+               <td>{{product.comments}}</td>
+               <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
+               <td><input type="text" placeholder="..." #newItem ></td>
+               <td><input type="text" placeholder="..." (change)="retireStock($event.target.value, product.quantityInStock, newItem.value, product.id)"></td>
+               <td><input type="text" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
+<!--
+                <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
+               <td><input type="text" placeholder="..." #newItem (change)="manageInput(newItem.value)"></td>
+               <td><input type="text" placeholder="..." [disabled]="test" (change)="retireStock($event.target.value, newItem.value, product.id)"></td>
+               <td><input type="text" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
+               -->
+         </tr>
+         </table>
+   </div>
+   <button class="myButton" type="button" (click)="sendManageStock()" >Modifier</button>
+   <div class="divCategory">
+         <h1 class="categoryTitle"> Coquillages</h1>
+         <div class="helpDiv">Pour un Achat (A) : remplir "Ajouter stock"<br>
+         Pour un Retrait par Vente (RPV) : remplir "Retirer stock" PUIS mettre le prix de la revente<br>
+         Pour un Retrait par Invendu (RPI) : remplir "Retirer stock" PUIS mettre 0 au prix de la revente</div>
+         <table class="myTable">
+         <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+         <tr *ngFor="let product of coquillages">
+               <td>{{product.name}}</td>
+               <td>{{product.price}}€</td>
+               <td>{{product.discount}}€</td>
+               <td>{{product.discountPercentage}}%</td>
+               <td>{{product.quantityInStock}}</td>
+               <td>{{product.comments}}</td>
+               <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
+               <td><input id="myElem" type="text" placeholder="..." #newItem></td>
+               <td><input type="text" placeholder="..." (change)="retireStock($event.target.value, product.quantityInStock, newItem.value, product.id)"></td>
+               <td><input type="text" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
+         </tr>
+         </table>
+   </div>
+   <div class="divCategory">
+      <h1 class="categoryTitle"> Crustaces</h1>
+      <div class="helpDiv">Pour un Achat (A) : remplir "Ajouter stock"<br>
+         Pour un Retrait par Vente (RPV) : remplir "Retirer stock" PUIS mettre le prix de la revente<br>
+         Pour un Retrait par Invendu (RPI) : remplir "Retirer stock" PUIS mettre 0 au prix de la revente</div>
+      <table class="myTable">
+         <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+         <tr *ngFor="let product of crustaces">
+               <td>{{product.name}}</td>
+               <td>{{product.price}}€</td>
+               <td>{{product.discount}}€</td>
+               <td>{{product.discountPercentage}}%</td>
+               <td>{{product.quantityInStock}}</td>
+               <td>{{product.comments}}</td>
+               <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
+               <td><input type="text" placeholder="..." #newItem></td>
+               <td><input type="text" placeholder="..." (change)="retireStock($event.target.value, product.quantityInStock, newItem.value, product.id)"></td>
+               <td><input type="text" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
+         </tr>
+         </table>
+   </div>
+   <button class="myButton" type="button" (click)="sendManageStock()" >Modifier</button>
 </div>
+
+   

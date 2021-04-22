@@ -13,9 +13,9 @@ export class ManageStockComponent implements OnInit {
   poissons: any;
   coquillages: any;
   crustaces: any;
-  
-  ajoutStock: any;
-  discount: any;
+  blockModification: boolean;
+
+  modificationList: any
 
   headers: any;
   categories: any;
@@ -25,10 +25,11 @@ export class ManageStockComponent implements OnInit {
     this.poissons = [];
     this.coquillages = [];
     this.crustaces = [];
-    this.ajoutStock = [];
-    this.discount = [];
+    this.modificationList = [];
 
-    this.headers = ["Nom", "Prix", "Prix en promotion", "Pourcentage de promotion", "Quantité en stock", "Commentaires","Ajouter Stock","Ajouter Promo"];
+    this.blockModification = false;
+
+    this.headers = ["Nom", "Prix", "Prix en promotion", "Pourcentage de promotion", "Quantité en stock", "Commentaires","Ajouter Stock","Retrait Stock","Prix de revente","Ajouter Promo"];
     this.categories = ["Poissons", "Coquillages", "Crustacés"]
   }
 
@@ -60,27 +61,81 @@ export class ManageStockComponent implements OnInit {
   }
 
   sendManageStock(){
-    console.log(this.discount)
-    let json = [{
-      "id": 1,
-      "stock": {
-        "quantity": 11,
-        "price": 0,
-        "type": "A"
-      },
-      "discPer": 15
-    },]
-    this.manageProduct.patchManageAll(json)
-    .subscribe(
-          (val) => {
-              console.log("PATCH call successful value returned in body", 
-                          val);
-          },
-          response => {
-              console.log("PATCH call in error", response);
-          },
-          () => {
-              console.log("The PATCH observable is now completed.");
-          }); ;
+    if(!this.blockModification){
+      this.manageProduct.patchManageAll(this.modificationList)
+      .subscribe(
+        (val) => {
+            console.log("PATCH call successful value returned in body", 
+                        val);
+        },
+        response => {
+            console.log("PATCH call in error", response);
+        },
+        () => {
+            console.log("The PATCH observable is now completed.");
+        });
+        setTimeout(location.reload.bind(location), 150);
+      }
   }
+
+  ajoutStock(value, id){
+    console.log("ajout stock : " + value + "id : " + id)
+      this.modificationList.push({
+        "id" : id,
+        "stock" : {
+          "quantity": value,
+          "price": 0,
+          "type": "A"
+      }
+  })
+}
+
+  retireStock(price, stock, retrait, id){
+    if(stock >= retrait) { 
+      this.blockModification = false;  
+      if (price == 0){
+        this.modificationList.push({
+          "id" : id,
+          "stock" : {
+            "quantity": retrait,
+            "price": 0,
+            "type": "RPI"
+          }
+        })
+      }
+      else {
+        this.modificationList.push({
+          "id" : id,
+          "stock" : {
+            "quantity": retrait,
+            "price": price,
+            "type": "RPV"
+        }
+      })
+    }
+  }
+  else{
+    var bt = document.getElementById('myElem');
+      bt.style.backgroundColor;
+      this.blockModification = true;
+  }
+}
+  changeDiscount(value, id){
+    
+      this.modificationList.push({
+        "id" : id,
+        "discPer" : value
+      })
+  }
+
+  /*manageInput(v){
+    var bt = document.getElementById('btSubmit');
+        if (v >= 0) {
+            bt.disabled = false;
+        }
+        else {
+            bt.disabled = true;
+        }
+      }
+      */
 }
