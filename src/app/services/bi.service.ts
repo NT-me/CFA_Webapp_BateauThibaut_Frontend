@@ -21,5 +21,19 @@ export class BiService {
     return this.http.get(this.apiAllHistory, this.requestOptions);
 }
 
+  getInfosFiltered(request){
+    return this.http.get(this.apiAllHistory+request, this.requestOptions);
+  }
 
+  getInfoHistoryByDate(dateDebut,dateFin){
+    return this.http.get(this.apiAllHistory+"?startInterval="+dateDebut+"&endInterval="+dateFin,this.requestOptions);
+  }
+
+  getInfoHistoryByType(transactionType){
+    return this.http.get(this.apiAllHistory+"?type="+transactionType,this.requestOptions);
+  }
+
+  getInfoHistoryByCategory(category){
+    return this.http.get(this.apiAllHistory+"?category="+category,this.requestOptions);
+  }
 }

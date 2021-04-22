@@ -1,5 +1,35 @@
 <div class="biPage">
     <h1 class="titleBI">Vos chiffres clés</h1>
 
-    <p>{{allHistory[1].totalPrice}}</p>
+    <form [formGroup]="filters" (ngSubmit)="submitForm()" novalidate>
+        <label for="exampleInput">Entrez une date de début: </label>
+        <input type="date" name="input" formControlName="dateDebut" [(ngModel)]="dateDebut"
+        placeholder="yyyy-MM-dd" min="2018-01-01" max="2021-12-31" />
+        <label for="exampleInput">Entrez une date de fin: </label>
+        <input type="date" name="input" formControlName="dateFin" [(ngModel)]="dateFin"
+        placeholder="yyyy-MM-dd" min="2018-01-01" max="2021-12-31" /><br>
+        <input type="string" name="input" formControlName="type"
+        placeholder="type"/><br>
+        <input type="string" name="input" formControlName="category"
+        placeholder="category"/><br>
+        <input [disabled]="!filters.valid" type="submit" value="submit">
+    </form>
+
+     <table class="myTable" *ngIf>
+        <tr>
+            <th *ngFor="let column of headers">
+               {{column}}
+            </th>
+         </tr>
+        <tr *ngFor="let timeStamp of transactions">
+            <td>{{convertTimeStamp(timeStamp.time)}}</td>
+            <td>{{timeStamp.name}}</td>
+            <td>{{timeStamp.quantity}}</td>
+            <td>{{timeStamp.type}}</td>
+            <td>{{checkTypeD(timeStamp)}}</td>
+            <td>{{checkTypeC(timeStamp)}}</td>
+        </tr>
+    </table>
+    <p>Total Brut :</p>
+    <p>Total Net :</p>
 </div>
