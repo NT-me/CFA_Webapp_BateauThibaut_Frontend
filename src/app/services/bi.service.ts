@@ -26,7 +26,7 @@ export class BiService {
   }
 
   getInfoHistoryByDate(dateDebut,dateFin){
-    return this.http.get(this.apiAllHistory+"?startInterval="+dateDebut+"&endInterval="+dateFin,this.requestOptions);
+    return this.http.get(this.apiAllHistory+"?startInterval="+dateDebut+"&endInterval="+dateFin+"&revenue=true",this.requestOptions);
   }
 
   getInfoHistoryByType(transactionType){
