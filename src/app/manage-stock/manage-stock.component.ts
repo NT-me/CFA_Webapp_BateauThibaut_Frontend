@@ -13,7 +13,7 @@ export class ManageStockComponent implements OnInit {
   poissons: any;
   coquillages: any;
   crustaces: any;
-  
+  blockModification: boolean;
 
   modificationList: any
 
@@ -26,6 +26,8 @@ export class ManageStockComponent implements OnInit {
     this.coquillages = [];
     this.crustaces = [];
     this.modificationList = [];
+
+    this.blockModification = false;
 
     this.headers = ["Nom", "Prix", "Prix en promotion", "Pourcentage de promotion", "Quantité en stock", "Commentaires","Ajouter Stock","Retrait Stock","Prix de revente","Ajouter Promo"];
     this.categories = ["Poissons", "Coquillages", "Crustacés"]
@@ -59,18 +61,21 @@ export class ManageStockComponent implements OnInit {
   }
 
   sendManageStock(){
-    this.manageProduct.patchManageAll(this.modificationList)
-    .subscribe(
-      (val) => {
-          console.log("PATCH call successful value returned in body", 
-                      val);
-      },
-      response => {
-          console.log("PATCH call in error", response);
-      },
-      () => {
-          console.log("The PATCH observable is now completed.");
-      });
+    if(!this.blockModification){
+      this.manageProduct.patchManageAll(this.modificationList)
+      .subscribe(
+        (val) => {
+            console.log("PATCH call successful value returned in body", 
+                        val);
+        },
+        response => {
+            console.log("PATCH call in error", response);
+        },
+        () => {
+            console.log("The PATCH observable is now completed.");
+        });
+        setTimeout(location.reload.bind(location), 150);
+      }
   }
 
   ajoutStock(value, id){
@@ -85,30 +90,38 @@ export class ManageStockComponent implements OnInit {
   })
 }
 
-  retireStock(price, stock, id){
-    console.log("retirer stock : " + stock + "prix stock : " + price + "id : " + id)
-    if (price == 0){
-      this.modificationList.push({
-        "id" : id,
-        "stock" : {
-          "quantity": stock,
-          "price": 0,
-          "type": "RPI"
+  retireStock(price, stock, retrait, id){
+    if(stock >= retrait) { 
+      this.blockModification = false;  
+      if (price == 0){
+        this.modificationList.push({
+          "id" : id,
+          "stock" : {
+            "quantity": retrait,
+            "price": 0,
+            "type": "RPI"
+          }
+        })
+      }
+      else {
+        this.modificationList.push({
+          "id" : id,
+          "stock" : {
+            "quantity": retrait,
+            "price": price,
+            "type": "RPV"
         }
       })
     }
-    else {
-      this.modificationList.push({
-        "id" : id,
-        "stock" : {
-          "quantity": stock,
-          "price": price,
-          "type": "RPV"
-      }
-    })
+  }
+  else{
+    var bt = document.getElementById('myElem');
+      bt.style.backgroundColor;
+      this.blockModification = true;
   }
 }
   changeDiscount(value, id){
+    
       this.modificationList.push({
         "id" : id,
         "discPer" : value

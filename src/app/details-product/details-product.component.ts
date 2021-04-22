@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ManageProductsService } from '../services/manage-products.service';
 import { ProductsService } from '../services/products.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class DetailsProductComponent implements OnInit {
   product: any;
   myId: any;
 
-  constructor(public productsService : ProductsService) {
+  constructor(public productsService : ProductsService, public manageProduct : ManageProductsService) {
     this.products = [];
     this.poissons = [];
     this.coquillages = [];
@@ -51,5 +52,24 @@ export class DetailsProductComponent implements OnInit {
     (err) => {
       alert('failed');
     });
+  }
+
+  changeDiscount(value, id){ 
+      let pushElement = [{
+        "id" : id,
+        "discPer" : value
+      }]
+      this.manageProduct.patchManageAll(pushElement).subscribe(
+        (val) => {
+            console.log("PATCH call successful value returned in body", 
+                        val);
+        },
+        response => {
+            console.log("PATCH call in error", response);
+        },
+        () => {
+            console.log("The PATCH observable is now completed.");
+        });
+        setTimeout(location.reload.bind(location), 150);
   }
 }

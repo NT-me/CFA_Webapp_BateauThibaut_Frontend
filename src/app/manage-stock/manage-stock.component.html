@@ -1,6 +1,9 @@
 <div class="allProduct" ng-app="update" ng-controller="controller">
    <div class="divCategory">
          <h1 class="categoryTitle"> Poissons</h1>
+            <div class="helpDiv">Pour un Achat (A) : remplir "Ajouter stock"<br>
+         Pour un Retrait par Vente (RPV) : remplir "Retirer stock" PUIS mettre le prix de la revente<br>
+         Pour un Retrait par Invendu (RPI) : remplir "Retirer stock" PUIS mettre 0 au prix de la revente</div>
          <table class="myTable">
          <tr>
             <th *ngFor="let column of headers">
@@ -16,19 +19,23 @@
                <td>{{product.comments}}</td>
                <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
                <td><input type="text" placeholder="..." #newItem ></td>
-               <td><input type="text" placeholder="..." (change)="retireStock($event.target.value, newItem.value, product.id)"></td>
+               <td><input type="text" placeholder="..." (change)="retireStock($event.target.value, product.quantityInStock, newItem.value, product.id)"></td>
                <td><input type="text" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
-
-               <!-- <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
+<!--
+                <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
                <td><input type="text" placeholder="..." #newItem (change)="manageInput(newItem.value)"></td>
-               <td><input id="btSubmit" type="text" placeholder="..." disabled (change)="retireStock($event.target.value, newItem.value, product.id)"></td>
+               <td><input type="text" placeholder="..." [disabled]="test" (change)="retireStock($event.target.value, newItem.value, product.id)"></td>
                <td><input type="text" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
                -->
          </tr>
          </table>
-   </div> 
+   </div>
+   <button class="myButton" type="button" (click)="sendManageStock()" >Modifier</button>
    <div class="divCategory">
          <h1 class="categoryTitle"> Coquillages</h1>
+         <div class="helpDiv">Pour un Achat (A) : remplir "Ajouter stock"<br>
+         Pour un Retrait par Vente (RPV) : remplir "Retirer stock" PUIS mettre le prix de la revente<br>
+         Pour un Retrait par Invendu (RPI) : remplir "Retirer stock" PUIS mettre 0 au prix de la revente</div>
          <table class="myTable">
          <tr>
             <th *ngFor="let column of headers">
@@ -43,15 +50,17 @@
                <td>{{product.quantityInStock}}</td>
                <td>{{product.comments}}</td>
                <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
-               <td><input type="text" placeholder="..." #newItem></td>
-               <td><input type="text" placeholder="..." (change)="retireStock($event.target.value, newItem.value, product.id)"></td>
+               <td><input id="myElem" type="text" placeholder="..." #newItem></td>
+               <td><input type="text" placeholder="..." (change)="retireStock($event.target.value, product.quantityInStock, newItem.value, product.id)"></td>
                <td><input type="text" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
          </tr>
          </table>
    </div>
-   <button class="myButton" type="button" (click)="sendManageStock()" >Modifier</button>  
    <div class="divCategory">
       <h1 class="categoryTitle"> Crustaces</h1>
+      <div class="helpDiv">Pour un Achat (A) : remplir "Ajouter stock"<br>
+         Pour un Retrait par Vente (RPV) : remplir "Retirer stock" PUIS mettre le prix de la revente<br>
+         Pour un Retrait par Invendu (RPI) : remplir "Retirer stock" PUIS mettre 0 au prix de la revente</div>
       <table class="myTable">
          <tr>
             <th *ngFor="let column of headers">
@@ -67,11 +76,12 @@
                <td>{{product.comments}}</td>
                <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
                <td><input type="text" placeholder="..." #newItem></td>
-               <td><input type="text" placeholder="..." (change)="retireStock($event.target.value, newItem.value, product.id)"></td>
+               <td><input type="text" placeholder="..." (change)="retireStock($event.target.value, product.quantityInStock, newItem.value, product.id)"></td>
                <td><input type="text" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
          </tr>
          </table>
    </div>
+   <button class="myButton" type="button" (click)="sendManageStock()" >Modifier</button>
 </div>
 
    
