@@ -1,5 +1,19 @@
 <div class="home">
     <h1 class="titleHome">Bateau Thibault</h1>
 
-    <p>Ici on met l'authentification asap</p>
+    <form action="/action_page.php" *ngIf="!this.logged">
+       <label for="lname">Nom:</label><br>
+       <input type="text" id="lname" name="lname" [(ngModel)]="lname"><br>
+
+       <label for="lpass">Mot de passe:</label><br>
+       <input type="password" id="lpass" name="lpass" [(ngModel)]="lpass"><br><br>
+
+       <input type="submit" value="Submit" (click)="sendTokenReq()" >
+    </form>
+
+    <div *ngIf="this.logged">
+      <p>
+        Vous êtes maintenant connecté ! Votre token est {{authToken}}
+      </p>
+    </div>
 </div>
