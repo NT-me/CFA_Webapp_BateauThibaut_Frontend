@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BiService } from '../services/bi.service';
 import { filter, map } from "rxjs/operators";
-import { typeValidator, categoryValidator } from "../validators/custom.validators";
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -44,8 +43,10 @@ export class BiComponent implements OnInit {
 
   dateFin: any;
   dateDebut: any;
-  category: any;
-  type: any;
+  category : any;
+  type : any;
+  revenue : any;
+  margin: any;
   sale: boolean;
   filters = new FormGroup({
     category: new FormControl(''),
@@ -165,7 +166,6 @@ export class BiComponent implements OnInit {
   }
 
   setYear(year) {
-
     for (let i = 0; i < 12; i++) {
       let request = this.biService.getInfoHistoryByDate(this.convertToTimeStamp(year, i + 1), this.convertToTimeStamp(year, i + 2))
       this.biService.getInfosFiltered(request+"&revenue=true").subscribe(
@@ -262,9 +262,10 @@ export class BiComponent implements OnInit {
     if (this.sale) {
       request = request + this.biService.getInfoHistoryBySale();
     }
+    request = request + "&revenue=true"
     this.biService.getInfosFiltered(request).subscribe(data => {
       this.transactions = data["transactions"];
-      console.log(this.transactions)
+      this.relativeRevenue = data["relative revenue"];
     },
       (err) => {
         alert('failed');
