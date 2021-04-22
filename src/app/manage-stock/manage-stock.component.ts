@@ -17,10 +17,11 @@ export class ManageStockComponent implements OnInit {
 
   modificationList: any
 
+  regex: any;
   headers: any;
   categories: any;
 
-  constructor(public productsService : ProductsService, public manageProduct : ManageProductsService) { 
+  constructor(public productsService: ProductsService, public manageProduct: ManageProductsService) {
     this.products = [];
     this.poissons = [];
     this.coquillages = [];
@@ -29,74 +30,85 @@ export class ManageStockComponent implements OnInit {
 
     this.blockModification = false;
 
-    this.headers = ["Nom", "Prix", "Prix en promotion", "Pourcentage de promotion", "Quantité en stock", "Commentaires","Ajouter Stock","Retrait Stock","Prix de revente","Ajouter Promo"];
+    this.headers = ["Nom", "Prix", "Prix en promotion", "Pourcentage de promotion", "Quantité en stock", "Commentaires", "Ajouter Stock", "Retrait Stock", "Prix de revente", "Ajouter Promo"];
     this.categories = ["Poissons", "Coquillages", "Crustacés"]
+    this.regex = new RegExp(/[0-9]?[0-9]?[0-9]/i);
   }
 
   ngOnInit(): void {
     this.productsService.getInfoAllProducts().subscribe(data => {
       this.products = data;
     },
-    (err) => {
-      alert('failed');
-    });
+      (err) => {
+        alert('failed');
+      });
     this.productsService.getInfoAllPoissonsProducts().subscribe(data => {
       this.poissons = data;
     },
-    (err) => {
-      alert('failed');
-    });
+      (err) => {
+        alert('failed');
+      });
     this.productsService.getInfoAllCoquillagesProducts().subscribe(data => {
       this.coquillages = data;
     },
-    (err) => {
-      alert('failed');
-    });
+      (err) => {
+        alert('failed');
+      });
     this.productsService.getInfoAllCrustacesProducts().subscribe(data => {
       this.crustaces = data;
     },
-    (err) => {
-      alert('failed');
-    });
+      (err) => {
+        alert('failed');
+      });
   }
 
-  sendManageStock(){
-    if(!this.blockModification){
+  sendManageStock() {
+    if (!this.blockModification) {
       this.manageProduct.patchManageAll(this.modificationList)
-      .subscribe(
-        (val) => {
-            console.log("PATCH call successful value returned in body", 
-                        val);
-        },
-        response => {
+        .subscribe(
+          (val) => {
+            console.log("PATCH call successful value returned in body",
+              val);
+          },
+          response => {
             console.log("PATCH call in error", response);
-        },
-        () => {
+          },
+          () => {
             console.log("The PATCH observable is now completed.");
-        });
-        setTimeout(location.reload.bind(location), 150);
-      }
+          });
+      setTimeout(location.reload.bind(location), 150);
+    }
   }
 
-  ajoutStock(value, id){
-    console.log("ajout stock : " + value + "id : " + id)
-      this.modificationList.push({
-        "id" : id,
-        "stock" : {
-          "quantity": value,
-          "price": 0,
-          "type": "A"
+  ajoutStock(value, id) {
+    var input = document.getElementById('AjoutStock' + id);
+    if (value != "" && !value.match(this.regex)) {
+      input.style.backgroundColor = 'red';
+      return;
+    }
+    input.style.backgroundColor = 'white'
+    this.modificationList.push({
+      "id": id,
+      "stock": {
+        "quantity": value,
+        "price": 0,
+        "type": "A"
       }
-  })
-}
+    })
+  }
 
-  retireStock(price, stock, retrait, id){
-    if(stock >= retrait) { 
-      this.blockModification = false;  
-      if (price == 0){
+  retireStock(price, stock, retrait, id) {
+    var input = document.getElementById('RetireStock' + id);
+    if(!retrait.match(this.regex)){
+      input.style.backgroundColor = 'red';
+      return;
+    }
+    input.style.backgroundColor = 'white';
+    if (stock >= retrait) {
+      if (price == 0) {
         this.modificationList.push({
-          "id" : id,
-          "stock" : {
+          "id": id,
+          "stock": {
             "quantity": retrait,
             "price": 0,
             "type": "RPI"
@@ -105,27 +117,35 @@ export class ManageStockComponent implements OnInit {
       }
       else {
         this.modificationList.push({
-          "id" : id,
-          "stock" : {
+          "id": id,
+          "stock": {
             "quantity": retrait,
             "price": price,
             "type": "RPV"
-        }
-      })
+          }
+        })
+      }
+    }
+    else {
+      input.style.backgroundColor = 'red';
+      return;
     }
   }
-  else{
-    var bt = document.getElementById('myElem');
-      bt.style.backgroundColor;
-      this.blockModification = true;
-  }
-}
-  changeDiscount(value, id){
-    
+  changeDiscount(value, id) {
+    var input = document.getElementById('discount' + id);
+    input.style.backgroundColor = 'white';
+    if (value != "" && !value.match(this.regex)) {
+      input.style.backgroundColor = 'red';
+      return;
+    } else {
       this.modificationList.push({
-        "id" : id,
-        "discPer" : value
+        "id": id,
+        "discPer": value
       })
+    }
+    if(value == null){
+      input.style.backgroundColor = 'white';
+    }
   }
 
   /*manageInput(v){

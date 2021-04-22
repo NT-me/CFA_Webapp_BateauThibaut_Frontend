@@ -48,6 +48,7 @@ export class BiComponent implements OnInit {
   revenue : any;
   margin: any;
   sale: boolean;
+  
   filters = new FormGroup({
     category: new FormControl(''),
     type: new FormControl(''),
