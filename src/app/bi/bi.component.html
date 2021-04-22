@@ -8,14 +8,19 @@
         <label for="exampleInput">Entrez une date de fin: </label>
         <input type="date" name="input" formControlName="dateFin" [(ngModel)]="dateFin"
         placeholder="yyyy-MM-dd" min="2018-01-01" max="2021-12-31" /><br>
-        <input type="string" name="input" formControlName="type"
-        placeholder="type"/><br>
-        <input type="string" name="input" formControlName="category"
-        placeholder="category"/><br>
+        <label>Type de transactions</label>
+        <input type="string" name="input" formControlName="type" [(ngModel)]="type"
+        placeholder="type = A / RPV / RPI"/><br>
+        <label>Catégorie de produits</label>
+        <input type="string" name="input" formControlName="category" [(ngModel)]="category"
+        placeholder="category = POI / CRU / COQ"/><br>
+        <label>En promotion</label>
+        <input type = "checkbox" name ="promotion" formControlName="sale" [(ngModel)]="sale"><br>
         <input [disabled]="!filters.valid" type="submit" value="submit">
+        
     </form>
 
-     <table class="myTable" *ngIf>
+     <table class="myTable" *ngIf="displayAble">
         <tr>
             <th *ngFor="let column of headers">
                {{column}}
@@ -29,14 +34,15 @@
             <td>{{checkTypeD(timeStamp)}}</td>
             <td>{{checkTypeC(timeStamp)}}</td>
         </tr>
+        <p>Chiffre d'affaire {{relativeRevenue.turnover}} €</p>
+        <p>Marge {{relativeRevenue.margin}} €</p>
     </table>
-    <p>Total Brut :</p>
-    <p>Total Net :</p>
 
     <button class="changeYear" (click)="setValueGraph(2018)">2018</button>
     <button class="changeYear" (click)="setValueGraph(2019)">2019</button>
     <button class="changeYear" (click)="setValueGraph(2020)">2020</button>
     <button class="changeYear" (click)="setValueGraph(2021)">2021</button>
+
     <div d="chart">
         <apx-chart
             [series]="chartOptions.series"
