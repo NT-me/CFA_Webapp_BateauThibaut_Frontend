@@ -9,6 +9,7 @@ import { AllProductComponent } from './all-product/all-product.component';
 import { ManageStockComponent } from './manage-stock/manage-stock.component';
 import { HomeComponent } from './home/home.component';
 import { BiComponent } from './bi/bi.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { BiComponent } from './bi/bi.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    NgApexchartsModule,
     ReactiveFormsModule
   ],
   providers: [],

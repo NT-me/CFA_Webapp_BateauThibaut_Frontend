@@ -32,4 +32,21 @@
     </table>
     <p>Total Brut :</p>
     <p>Total Net :</p>
+
+    <button class="changeYear" (click)="setValueGraph(2018)">2018</button>
+    <button class="changeYear" (click)="setValueGraph(2019)">2019</button>
+    <button class="changeYear" (click)="setValueGraph(2020)">2020</button>
+    <button class="changeYear" (click)="setValueGraph(2021)">2021</button>
+    <div d="chart">
+        <apx-chart
+            [series]="chartOptions.series"
+            [chart]="chartOptions.chart"
+            [dataLabels]="chartOptions.dataLabels"
+            [plotOptions]="chartOptions.plotOptions"
+            [yaxis]="chartOptions.yaxis"
+            [xaxis]="chartOptions.xaxis"
+            [fill]="chartOptions.fill"
+            [title]="chartOptions.title"
+        ></apx-chart>
+    </div>
 </div>
