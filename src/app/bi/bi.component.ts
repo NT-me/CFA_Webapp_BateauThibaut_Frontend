@@ -20,10 +20,8 @@ export type ChartOptions = {
   chart: ApexChart;
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
-  yaxis: ApexYAxis;
   xaxis: ApexXAxis;
   fill: ApexFill;
-  title: ApexTitleSubtitle;
 };
 
 
@@ -139,15 +137,6 @@ export class BiComponent implements OnInit {
           opacityFrom: 1,
           opacityTo: 1,
           stops: [50, 0, 100, 100]
-        }
-      },
-
-      title: {
-        text: "Revenu mensuel, 2020",
-        offsetY: 320,
-        align: "center",
-        style: {
-          color: "#444"
         }
       }
     }

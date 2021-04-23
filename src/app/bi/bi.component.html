@@ -3,20 +3,20 @@
 
     <form [formGroup]="filters" (ngSubmit)="submitForm()" novalidate>
         <label for="exampleInput">Entrez une date de début: </label>
-        <input type="date" name="input" formControlName="dateDebut" [(ngModel)]="dateDebut"
+        <input class="myInput" type="date" name="input" formControlName="dateDebut" [(ngModel)]="dateDebut"
         placeholder="yyyy-MM-dd" min="2018-01-01" max="2021-12-31" />
-        <label for="exampleInput">Entrez une date de fin: </label>
-        <input type="date" name="input" formControlName="dateFin" [(ngModel)]="dateFin"
+        <label for="exampleInput"> Entrez une date de fin: </label>
+        <input class="myInput" type="date" name="input" formControlName="dateFin" [(ngModel)]="dateFin"
         placeholder="yyyy-MM-dd" min="2018-01-01" max="2021-12-31" /><br>
-        <label>Type de transactions</label>
-        <input type="string" name="input" formControlName="type" [(ngModel)]="type"
+        <label>Type de transactions : </label>
+        <input class="myInput" type="string" name="input" formControlName="type" [(ngModel)]="type"
         placeholder="type = A / RPV / RPI"/><br>
-        <label>Catégorie de produits</label>
-        <input type="string" name="input" formControlName="category" [(ngModel)]="category"
+        <label>Catégorie de produits : </label>
+        <input class="myInput" type="string" name="input" formControlName="category" [(ngModel)]="category"
         placeholder="category = POI / CRU / COQ"/><br>
-        <label>En promotion</label>
-        <input type = "checkbox" name ="promotion" formControlName="sale" [(ngModel)]="sale"><br>
-        <input [disabled]="!filters.valid" type="submit" value="submit">
+        <label>En promotion : </label>
+        <input class="myInput" type = "checkbox" name ="promotion" formControlName="sale" [(ngModel)]="sale"><br>
+        <input class="myButtonFilter" [disabled]="!filters.valid" type="submit" value="submit">
         
     </form>
 
@@ -34,8 +34,8 @@
             <td>{{checkTypeD(timeStamp)}}</td>
             <td>{{checkTypeC(timeStamp)}}</td>
         </tr>
-        <p>Chiffre d'affaire {{relativeRevenue.turnover}} €</p>
-        <p>Marge {{relativeRevenue.margin}} €</p>
+        <p class="revenue">Chiffre d'affaire : {{relativeRevenue.turnover}} €</p>
+        <p class="revenue">Marge : {{relativeRevenue.margin}} €</p>
     </table>
 
     <button class="changeYear" (click)="setValueGraph(2018)">2018</button>
@@ -49,10 +49,8 @@
             [chart]="chartOptions.chart"
             [dataLabels]="chartOptions.dataLabels"
             [plotOptions]="chartOptions.plotOptions"
-            [yaxis]="chartOptions.yaxis"
             [xaxis]="chartOptions.xaxis"
             [fill]="chartOptions.fill"
-            [title]="chartOptions.title"
         ></apx-chart>
     </div>
 </div>
