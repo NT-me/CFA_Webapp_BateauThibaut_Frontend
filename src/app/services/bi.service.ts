@@ -11,34 +11,40 @@ export class BiService {
   apiAllHistory
 
   constructor(public http: HttpClient) {
-    this.requestOptions = {headers: new HttpHeaders({
-      'accept':'application/json',
-      'Auth' : 'Bearer '+localStorage.getItem("authToken")
-    })};
+    this.requestOptions = {
+      headers: new HttpHeaders({
+        'accept': 'application/json',
+        'Auth': 'Bearer ' + localStorage.getItem("authToken")
+      })
+    };
     this.apiAllHistory = "http://185.157.246.156/bi/info/history/all";
-}
+  }
 
-  getInfoAllHistory(){
-    return this.http.get(this.apiAllHistory+"?revenue=true", this.requestOptions);
-}
+  getInfoAllHistory() {
+    return this.http.get(this.apiAllHistory + "?revenue=true", this.requestOptions);
+  }
 
-  getInfosFiltered(request){
+  getInfosFiltered(request) {
     return this.http.get(request, this.requestOptions);
   }
 
-  getInfoHistoryByDate(dateDebut,dateFin){
-    return this.apiAllHistory+"?startInterval="+(Date.parse(dateDebut)/1000)+"&endInterval="+((Date.parse(dateFin)/1000)+(3600*22));
+  getInfoHistoryByDate(dateDebut, dateFin) {
+    return this.apiAllHistory + "?startInterval=" + (Date.parse(dateDebut) / 1000) + "&endInterval=" + ((Date.parse(dateFin) / 1000) + (3600 * 22));
   }
 
-  getInfoHistoryByType(transactionType){
-    return "&type="+transactionType;
+  getInfoHistoryByType(transactionType) {
+    return "&type=" + transactionType;
   }
 
-  getInfoHistoryByCategory(category){
-    return "&category="+category;
+  getInfoHistoryByCategory(category) {
+    return "&category=" + category;
   }
 
-  getInfoHistoryBySale(){
+  getInfoHistoryBySale() {
     return "&sale=true";
+  }
+
+  getInfoTaxesByYear(year) {
+    return this.http.get("http://185.157.246.156/bi/info/accountingresult?year=" + year, this.requestOptions);
   }
 }

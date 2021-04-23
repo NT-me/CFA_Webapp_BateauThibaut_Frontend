@@ -32,7 +32,7 @@ export class ManageStockComponent implements OnInit {
 
     this.headers = ["Nom", "Prix", "Prix en promotion", "Pourcentage de promotion", "Quantité en stock", "Commentaires", "Ajouter Stock", "Retrait Stock", "Prix de revente", "Ajouter Promo"];
     this.categories = ["Poissons", "Coquillages", "Crustacés"]
-    this.regex = new RegExp(/[0-9]?[0-9]?[0-9]/i);
+    this.regex = new RegExp(/[^-]\d[^-]/i);
   }
 
   ngOnInit(): void {
@@ -98,12 +98,30 @@ export class ManageStockComponent implements OnInit {
   }
 
   retireStock(price, stock, retrait, id) {
-    var input = document.getElementById('RetireStock' + id);
-    if(!retrait.match(this.regex)){
-      input.style.backgroundColor = 'red';
+    var revente = document.getElementById('Revente' + id);
+    var ret = document.getElementById('RetireStock' + id);
+    let verifRetrait = (retrait != "" && !retrait.match(this.regex));
+    let verifPrice = (price != "" && !price.match(this.regex));
+
+    console.log("price = "+price)
+    console.log("stock = "+stock)
+    console.log("retrait = "+retrait)
+
+    if(verifRetrait && verifPrice){
+      ret.style.backgroundColor = 'red';
+      revente.style.backgroundColor = 'red';
       return;
     }
-    input.style.backgroundColor = 'white';
+    if(verifRetrait && !verifPrice){
+      ret.style.backgroundColor = 'red';
+      return
+    }
+    if (verifPrice && !verifRetrait) {
+      revente.style.backgroundColor = 'red';
+      return;
+    }
+    ret.style.backgroundColor = 'white';
+    revente.style.backgroundColor = 'white';
     if (stock >= retrait) {
       if (price == 0) {
         this.modificationList.push({
@@ -127,14 +145,15 @@ export class ManageStockComponent implements OnInit {
       }
     }
     else {
-      input.style.backgroundColor = 'red';
+      ret.style.backgroundColor = 'red';
       return;
     }
   }
+
   changeDiscount(value, id) {
     var input = document.getElementById('discount' + id);
     input.style.backgroundColor = 'white';
-    if (value != "" && !value.match(this.regex)) {
+    if ((value != "" && !value.match(this.regex)) || parseInt(value) >= 101) {
       input.style.backgroundColor = 'red';
       return;
     } else {
@@ -142,9 +161,6 @@ export class ManageStockComponent implements OnInit {
         "id": id,
         "discPer": value
       })
-    }
-    if(value == null){
-      input.style.backgroundColor = 'white';
     }
   }
 
