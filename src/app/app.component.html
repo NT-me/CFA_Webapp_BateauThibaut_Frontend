@@ -15,6 +15,11 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/bi">Chiffres Clés</a>
       </li>
+
+      <li class="nav-item">
+        <img *ngIf="this.logged" class="nav-img" src="assets/link-solid.svg" (click)="disconnect()">
+        <img *ngIf="!this.logged" class="nav-img" src="assets/unlink-solid.svg">
+      </li>
     </ul>
 </nav>
 <router-outlet></router-outlet>

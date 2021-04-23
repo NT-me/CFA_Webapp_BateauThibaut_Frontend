@@ -15,7 +15,7 @@ export class AllProductComponent implements OnInit {
 
   headers: any;
   categories: any
-  constructor(public productsService : ProductsService) { 
+  constructor(public productsService : ProductsService) {
     this.products = [];
     this.poissons = [];
     this.coquillages = [];

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,10 @@ export class ProductsService {
   apiProduct
 
   constructor(public http: HttpClient) {
-    this.requestOptions = new Headers({
-      'accept':'application/json'
-    });
+    this.requestOptions = {headers: new HttpHeaders({
+      'accept':'application/json',
+      'Auth' : 'Bearer '+localStorage.getItem("authToken")
+    })};
     this.apiAllProducts = "http://185.157.246.156/products/info/all";
     this.apiAllPoissons = "http://185.157.246.156/products/info/all?category=POI";
     this.apiAllCoquillages = "http://185.157.246.156/products/info/all?category=COQ";
