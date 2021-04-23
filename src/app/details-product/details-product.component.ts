@@ -19,57 +19,74 @@ export class DetailsProductComponent implements OnInit {
   categories: any
   product: any;
   myId: any;
+  regex: any
 
-  constructor(public productsService : ProductsService, public manageProduct : ManageProductsService) {
+  button: any
+
+  constructor(public productsService: ProductsService, public manageProduct: ManageProductsService) {
     this.products = [];
     this.poissons = [];
     this.coquillages = [];
     this.crustaces = [];
+    this.regex = new RegExp(/[^-]\d[^-]/i);
+    this.button = true;
 
     this.headers = ["Nom", "Prix", "Prix en promotion", "Pourcentage de promotion", "Quantité en stock", "Commentaires"];
     this.categories = ["Poissons", "Coquillages", "Crustacés"]
-   }
+
+  }
 
 
   ngOnInit() {
     this.productsService.getInfoAllProducts().subscribe(data => {
       this.products = data;
     },
-    (err) => {
-      alert('failed');
-    });
+      (err) => {
+        alert('failed');
+      });
 
   }
 
-  afficherAll(){
+  afficherAll() {
     this.product = undefined;
   }
 
-  afficherOne(id){
+  afficherOne(id) {
     this.productsService.getInfoProduct(id).subscribe(data => {
       this.product = data;
     },
-    (err) => {
-      alert('failed');
-    });
+      (err) => {
+        alert('failed');
+      });
   }
 
-  changeDiscount(value, id){
-      let pushElement = [{
-        "id" : id,
-        "discPer" : value
-      }]
-      this.manageProduct.patchManageAll(pushElement).subscribe(
-        (val) => {
-            console.log("PATCH call successful value returned in body",
-                        val);
-        },
-        response => {
-            console.log("PATCH call in error", response);
-        },
-        () => {
-            console.log("The PATCH observable is now completed.");
-        });
-        setTimeout(location.reload.bind(location), 150);
+  redize(value) {
+    let input = document.getElementById('input');
+    if ((value != "" && !value.match(this.regex)) || parseInt(value) >= 101) {
+      input.style.backgroundColor = 'red';
+      this.button = false;
+    } else {
+      input.style.backgroundColor = 'white';
+      this.button = true;
+    }
+  }
+
+  changeDiscount(value, id) {
+    let pushElement = [{
+      "id": id,
+      "discPer": value
+    }]
+    this.manageProduct.patchManageAll(pushElement).subscribe(
+      (val) => {
+        console.log("PATCH call successful value returned in body",
+          val);
+      },
+      response => {
+        console.log("PATCH call in error", response);
+      },
+      () => {
+        console.log("The PATCH observable is now completed.");
+      });
+    setTimeout(location.reload.bind(location), 150);
   }
 }

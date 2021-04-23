@@ -33,22 +33,25 @@ export type ChartOptions = {
 
 export class BiComponent implements OnInit {
 
+  annéeOuverture: any;
+  annees: any;
   allHistory: any;
   transactions: any;
   relativeRevenue: any;
   total: any;
   headers: any;
+  annee: any;
+  hidden: any;
+  taxes: any;
 
   dateFin: any;
   dateDebut: any;
-  category : any;
-  type : any;
-  revenue : any;
+  category: any;
+  type: any;
+  revenue: any;
   margin: any;
   sale: boolean;
 
-  
-  
   filters = new FormGroup({
     category: new FormControl(''),
     type: new FormControl(''),
@@ -72,14 +75,16 @@ export class BiComponent implements OnInit {
   my2021: HTMLElement;
 
   constructor(public biService: BiService, private fb: FormBuilder) {
+    this.annéeOuverture = "2018";
     this.allHistory = [];
     this.transactions = [];
-    this.relativeRevenue =[];
+    this.relativeRevenue = [];
     this.headers = ["Date", "Nom", "Quantité", "Type transaction", "Gain", "Perte"];
     this.displayAble = false;
     this.category = "";
     this.type = "";
     this.headers = ["Date", "Nom", "Quantité", "Type transaction", "Gain", "Perte"]
+
     this.monthTmp = [];
 
     this.my2018 = document.getElementById('2018');
@@ -87,6 +92,10 @@ export class BiComponent implements OnInit {
     this.my2020 = document.getElementById('2020');
     this.my2021 = document.getElementById('2021');
 
+    this.annees = this.getYears(this.annéeOuverture);
+    this.hidden = true;
+    this.annee = 0;
+    this.taxes = "";
 
     this.chartOptions = {
       series: [
@@ -169,7 +178,7 @@ export class BiComponent implements OnInit {
   setYear(year) {
     for (let i = 0; i < 12; i++) {
       let request = this.biService.getInfoHistoryByDate(this.convertToTimeStamp(year, i + 1), this.convertToTimeStamp(year, i + 2))
-      this.biService.getInfosFiltered(request+"&revenue=true").subscribe(
+      this.biService.getInfosFiltered(request + "&revenue=true").subscribe(
         data => {
           this.monthTmp[i] = data["relative revenue"]
         },
@@ -180,7 +189,7 @@ export class BiComponent implements OnInit {
           }
         }
       );
-      
+
     }
   }
   setValueGraph(annee) {
@@ -191,16 +200,16 @@ export class BiComponent implements OnInit {
       }]
       this.chartOptions.series = [{
         data: [this.monthTmp[0].margin,
-        this.monthTmp[1].margin, 
-        this.monthTmp[2].margin, 
-        this.monthTmp[3].margin, 
-        this.monthTmp[4].margin, 
-        this.monthTmp[5].margin, 
-        this.monthTmp[6].margin, 
-        this.monthTmp[7].margin, 
-        this.monthTmp[8].margin, 
-        this.monthTmp[9].margin, 
-        this.monthTmp[10].margin, 
+        this.monthTmp[1].margin,
+        this.monthTmp[2].margin,
+        this.monthTmp[3].margin,
+        this.monthTmp[4].margin,
+        this.monthTmp[5].margin,
+        this.monthTmp[6].margin,
+        this.monthTmp[7].margin,
+        this.monthTmp[8].margin,
+        this.monthTmp[9].margin,
+        this.monthTmp[10].margin,
         this.monthTmp[11].margin]
       }]
     }, 9000);
@@ -263,7 +272,7 @@ export class BiComponent implements OnInit {
     if (this.sale) {
       request = request + this.biService.getInfoHistoryBySale();
     }
-    request = request + "&revenue=true"
+    request = request + "?revenue=true"
     this.biService.getInfosFiltered(request).subscribe(data => {
       this.transactions = data["transactions"];
       this.relativeRevenue = data["relative revenue"];
@@ -281,5 +290,25 @@ export class BiComponent implements OnInit {
   getType() {
     return this.filters.get('type');
   }
-}
 
+  getYears(debut) {
+    var now = new Date(Date.now());
+    var actualYear = now.getFullYear();
+    var data = [];
+    for (var i = parseInt(debut); i <= actualYear; i++) {
+      data[i - debut] = i;
+    }
+    console.log(data);
+    return data;
+  }
+
+  afficherAnnee(year) {
+    this.hidden = false;
+    return this.biService.getInfoTaxesByYear(year).subscribe(data => {
+      this.taxes = data["taxes"];
+    },
+      (err) => {
+        alert('failed');
+      });
+  }
+}

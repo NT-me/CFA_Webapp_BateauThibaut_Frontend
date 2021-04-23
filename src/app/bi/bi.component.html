@@ -4,28 +4,28 @@
     <form [formGroup]="filters" (ngSubmit)="submitForm()" novalidate>
         <label for="exampleInput">Entrez une date de début: </label>
         <input class="myInput" type="date" name="input" formControlName="dateDebut" [(ngModel)]="dateDebut"
-        placeholder="yyyy-MM-dd" min="2018-01-01" max="2021-12-31" />
+            placeholder="yyyy-MM-dd" min="2018-01-01" max="2021-12-31" />
         <label for="exampleInput"> Entrez une date de fin: </label>
         <input class="myInput" type="date" name="input" formControlName="dateFin" [(ngModel)]="dateFin"
-        placeholder="yyyy-MM-dd" min="2018-01-01" max="2021-12-31" /><br>
+            placeholder="yyyy-MM-dd" min="2018-01-01" max="2021-12-31" /><br>
         <label>Type de transactions : </label>
         <input class="myInput" type="string" name="input" formControlName="type" [(ngModel)]="type"
-        placeholder="type = A / RPV / RPI"/><br>
+            placeholder="type = A / RPV / RPI" /><br>
         <label>Catégorie de produits : </label>
         <input class="myInput" type="string" name="input" formControlName="category" [(ngModel)]="category"
-        placeholder="category = POI / CRU / COQ"/><br>
+            placeholder="category = POI / CRU / COQ" /><br>
         <label>En promotion : </label>
-        <input class="myInput" type = "checkbox" name ="promotion" formControlName="sale" [(ngModel)]="sale"><br>
+        <input class="myInput" type="checkbox" name="promotion" formControlName="sale" [(ngModel)]="sale"><br>
         <input class="myButtonFilter" [disabled]="!filters.valid" type="submit" value="submit">
-        
+
     </form>
 
-     <table class="myTable" *ngIf="displayAble">
+    <table class="myTable" *ngIf="displayAble">
         <tr>
             <th *ngFor="let column of headers">
-               {{column}}
+                {{column}}
             </th>
-         </tr>
+        </tr>
         <tr *ngFor="let timeStamp of transactions">
             <td>{{convertTimeStamp(timeStamp.time)}}</td>
             <td>{{timeStamp.name}}</td>
@@ -44,13 +44,21 @@
     <button id="2021" [disabled]="false" class="changeYear" (click)="setValueGraph(2021)">2021</button>
 
     <div d="chart">
-        <apx-chart
-            [series]="chartOptions.series"
-            [chart]="chartOptions.chart"
-            [dataLabels]="chartOptions.dataLabels"
-            [plotOptions]="chartOptions.plotOptions"
-            [xaxis]="chartOptions.xaxis"
-            [fill]="chartOptions.fill"
-        ></apx-chart>
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [dataLabels]="chartOptions.dataLabels"
+            [plotOptions]="chartOptions.plotOptions" [xaxis]="chartOptions.xaxis" [fill]="chartOptions.fill">
+        </apx-chart>
     </div>
+
+    <table class="myTable">
+        <tr>
+            <th>
+                <p>Impôts pour l'année :</p>
+                <select class="selectAnnee" [(ngModel)]="annee" (change)="afficherAnnee(annee)">
+                    <option *ngFor="let anne of annees">
+                        {{anne}}</option>
+                </select>
+                <p *ngIf="!hidden">L'année fiscale s'élève à {{taxes}} €</p>
+            </th>
+        </tr>
+    </table>
 </div>
