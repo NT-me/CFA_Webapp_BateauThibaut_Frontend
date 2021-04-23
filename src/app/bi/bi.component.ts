@@ -46,6 +46,8 @@ export class BiComponent implements OnInit {
   revenue : any;
   margin: any;
   sale: boolean;
+
+  
   
   filters = new FormGroup({
     category: new FormControl(''),
@@ -60,11 +62,14 @@ export class BiComponent implements OnInit {
   });
 
   monthTmp: any;
-  janvier; fevrier; mars; avril; mai; juin; juillet; aout; septembre; octobre; novembre; decembre;
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
   displayAble: boolean;
+  my2018: HTMLElement;
+  my2019: HTMLElement;
+  my2020: HTMLElement;
+  my2021: HTMLElement;
 
   constructor(public biService: BiService, private fb: FormBuilder) {
     this.allHistory = [];
@@ -75,7 +80,13 @@ export class BiComponent implements OnInit {
     this.category = "";
     this.type = "";
     this.headers = ["Date", "Nom", "Quantité", "Type transaction", "Gain", "Perte"]
-    this.monthTmp = [this.janvier, this.fevrier, this.mars, this.avril, this.mai, this.juin, this.juillet, this.aout, this.septembre, this.octobre, this.novembre, this.decembre];
+    this.monthTmp = [];
+
+    this.my2018 = document.getElementById('2018');
+    this.my2019 = document.getElementById('2019');
+    this.my2020 = document.getElementById('2020');
+    this.my2021 = document.getElementById('2021');
+
 
     this.chartOptions = {
       series: [
@@ -161,38 +172,38 @@ export class BiComponent implements OnInit {
       this.biService.getInfosFiltered(request+"&revenue=true").subscribe(
         data => {
           this.monthTmp[i] = data["relative revenue"]
-
         },
         (err) => {
           this.monthTmp[i] = {
             "turnover": 0,
             "margin": 0
           }
-
         }
-
-      )
+      );
+      
     }
   }
   setValueGraph(annee) {
-    this.setYear(annee)
-    this.chartOptions.series = [{
-      data: []
-    }]
-    this.chartOptions.series = [{
-      data: [this.monthTmp[0].margin,
-      this.monthTmp[1].margin, 
-      this.monthTmp[2].margin, 
-      this.monthTmp[3].margin, 
-      this.monthTmp[4].margin, 
-      this.monthTmp[5].margin, 
-      this.monthTmp[6].margin, 
-      this.monthTmp[7].margin, 
-      this.monthTmp[8].margin, 
-      this.monthTmp[9].margin, 
-      this.monthTmp[10].margin, 
-      this.monthTmp[11].margin]
-    }]
+    this.setYear(annee);
+    setTimeout(() => {
+      this.chartOptions.series = [{
+        data: []
+      }]
+      this.chartOptions.series = [{
+        data: [this.monthTmp[0].margin,
+        this.monthTmp[1].margin, 
+        this.monthTmp[2].margin, 
+        this.monthTmp[3].margin, 
+        this.monthTmp[4].margin, 
+        this.monthTmp[5].margin, 
+        this.monthTmp[6].margin, 
+        this.monthTmp[7].margin, 
+        this.monthTmp[8].margin, 
+        this.monthTmp[9].margin, 
+        this.monthTmp[10].margin, 
+        this.monthTmp[11].margin]
+      }]
+    }, 9000);
   }
 
   convertTimeStamp(timeStamp): String {
@@ -271,3 +282,4 @@ export class BiComponent implements OnInit {
     return this.filters.get('type');
   }
 }
+

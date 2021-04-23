@@ -38,10 +38,10 @@
         <p class="revenue">Marge : {{relativeRevenue.margin}} €</p>
     </table>
 
-    <button class="changeYear" (click)="setValueGraph(2018)">2018</button>
-    <button class="changeYear" (click)="setValueGraph(2019)">2019</button>
-    <button class="changeYear" (click)="setValueGraph(2020)">2020</button>
-    <button class="changeYear" (click)="setValueGraph(2021)">2021</button>
+    <button id="2018" [disabled]="false" class="changeYear" (click)="setValueGraph(2018)">2018</button>
+    <button id="2019" [disabled]="false" class="changeYear" (click)="setValueGraph(2019)">2019</button>
+    <button id="2020" [disabled]="false" class="changeYear" (click)="setValueGraph(2020)">2020</button>
+    <button id="2021" [disabled]="false" class="changeYear" (click)="setValueGraph(2021)">2021</button>
 
     <div d="chart">
         <apx-chart
