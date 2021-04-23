@@ -272,7 +272,7 @@ export class BiComponent implements OnInit {
     if (this.sale) {
       request = request + this.biService.getInfoHistoryBySale();
     }
-    request = request + "?revenue=true"
+    request = request + "&revenue=true"
     this.biService.getInfosFiltered(request).subscribe(data => {
       this.transactions = data["transactions"];
       this.relativeRevenue = data["relative revenue"];
