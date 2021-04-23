@@ -5,11 +5,11 @@ ul {
     overflow: hidden;
     background-color: #08083f;
   }
-  
+
   li {
     float: left;
   }
-  
+
   li a {
     display: block;
     color: white;
@@ -17,7 +17,14 @@ ul {
     padding: 14px 16px;
     text-decoration: none;
   }
-  
+
   li a:hover {
     background-color: #2164ff;
   }
+
+.nav-img{
+  width: 1em;
+  filter: invert(100%);
+  -webkit-filter: invert(100%);
+  padding: 14px 16px;
+}

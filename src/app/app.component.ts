@@ -7,4 +7,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ProjetBateau';
+  logged = false;
+
+
+  ngOnInit(): void {
+    if (localStorage.getItem("authToken") == null){
+      this.logged = false;
+    }
+    else{
+      this.logged = true;
+    }
+  }
+
+  disconnect(){
+    localStorage.removeItem("authToken")
+    this.logged = false;
+    window.location.reload();
+  }
 }

@@ -30,7 +30,7 @@ export class DetailsProductComponent implements OnInit {
     this.categories = ["Poissons", "Coquillages", "Crustacés"]
    }
 
-  
+
   ngOnInit() {
     this.productsService.getInfoAllProducts().subscribe(data => {
       this.products = data;
@@ -38,9 +38,9 @@ export class DetailsProductComponent implements OnInit {
     (err) => {
       alert('failed');
     });
-    
+
   }
-  
+
   afficherAll(){
     this.product = undefined;
   }
@@ -54,14 +54,14 @@ export class DetailsProductComponent implements OnInit {
     });
   }
 
-  changeDiscount(value, id){ 
+  changeDiscount(value, id){
       let pushElement = [{
         "id" : id,
         "discPer" : value
       }]
       this.manageProduct.patchManageAll(pushElement).subscribe(
         (val) => {
-            console.log("PATCH call successful value returned in body", 
+            console.log("PATCH call successful value returned in body",
                         val);
         },
         response => {

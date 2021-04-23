@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -10,10 +10,10 @@ export class ManageProductsService {
   apiManageAll
 
   constructor(public http: HttpClient) {
-    this.requestOptions = new Headers({
+    this.requestOptions = {headers: new HttpHeaders({
       'accept':'application/json',
-      'Content-Type': 'application/json'
-    });
+      'Auth' : 'Bearer '+localStorage.getItem("authToken")
+    })};
     this.apiManageAll = "http://185.157.246.156/products/";
 
 }

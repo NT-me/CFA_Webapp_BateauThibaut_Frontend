@@ -12,7 +12,6 @@ export class HomeComponent implements OnInit {
   lpass
   logged
   authToken
-  test
 
   constructor(public auth: AuthentificationService) {
     this.authFORM = new FormData();
@@ -23,16 +22,22 @@ export class HomeComponent implements OnInit {
     this.authFORM.set("scope", "");
     this.authFORM.set("client_id", "");
     this.authFORM.set("client_secret", "");
-
     this.lname = "";
     this.lpass = "";
 
     this.logged = false;
-
     this.authToken = "";
+
  }
 
   ngOnInit(): void {
+    console.log(localStorage.getItem("authToken"))
+    if (localStorage.getItem("authToken") == null){
+      this.logged = false;
+    }
+    else{
+      this.logged = true;
+    }
   }
 
   sendTokenReq(): void {
@@ -45,7 +50,9 @@ export class HomeComponent implements OnInit {
         this.lname = "";
         this.lpass = "";
         this.logged = true;
-        this.authToken = val["access_token"]
+        this.authToken = val["access_token"];
+        localStorage.setItem("authToken", val["access_token"]);
+        window.location.reload();
       },
         response => {
           console.log("POST call in error", response);
