@@ -13,7 +13,7 @@ export class AuthentificationService {
         'accept':'application/json',
         'Content-Type': 'application/json'
       });
-      this.apiTokenReq = "http://localhost:8000/security/pswd/token";
+      this.apiTokenReq = "http://loutre-duveteuse.fr.nf/security/pswd/token";
   }
 
     retrieveToken(formdata: any){
