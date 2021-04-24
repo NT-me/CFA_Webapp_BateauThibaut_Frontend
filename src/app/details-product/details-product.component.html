@@ -23,7 +23,7 @@
          <input class="myPromoInput" id="input" (change)="redize(disc.value)" placeholder="Nouvelle promotion" #disc>
          <br>
          <br>
-         <button class="myPromoButton" [disabled]="!button" (click)="changeDiscount(disc.value, product.id)">Modifier promotion</button>
+         <button class="myPromoButton" [disabled]="button" (click)="changeDiscount(disc.value, product.id)">Modifier promotion</button>
          <p>
             Quantité en stock : {{product.quantityInStock}}
          </p>

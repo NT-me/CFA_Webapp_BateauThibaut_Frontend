@@ -13,6 +13,7 @@ import {
   ApexXAxis,
   ApexFill
 } from "ng-apexcharts";
+import { Router } from '@angular/router';
 
 
 export type ChartOptions = {
@@ -69,12 +70,10 @@ export class BiComponent implements OnInit {
   public chartOptions: Partial<ChartOptions>;
 
   displayAble: boolean;
-  my2018: HTMLElement;
-  my2019: HTMLElement;
-  my2020: HTMLElement;
-  my2021: HTMLElement;
-
-  constructor(public biService: BiService, private fb: FormBuilder) {
+  myYearButton: boolean;
+  nbrSeconde: number;
+  myYearClicked: any;
+  constructor(public biService: BiService, private fb: FormBuilder, public router: Router) {
     this.annéeOuverture = "2018";
     this.allHistory = [];
     this.transactions = [];
@@ -87,10 +86,8 @@ export class BiComponent implements OnInit {
 
     this.monthTmp = [];
 
-    this.my2018 = document.getElementById('2018');
-    this.my2019 = document.getElementById('2019');
-    this.my2020 = document.getElementById('2020');
-    this.my2021 = document.getElementById('2021');
+    this.myYearButton = false
+    this.nbrSeconde = 9
 
     this.annees = this.getYears(this.annéeOuverture);
     this.hidden = true;
@@ -169,6 +166,7 @@ export class BiComponent implements OnInit {
     },
       (err) => {
         alert('failed');
+        this.router.navigate(['/home']);
       });
 
 
@@ -193,6 +191,8 @@ export class BiComponent implements OnInit {
     }
   }
   setValueGraph(annee) {
+    this.myYearButton = true
+    this.myYearClicked = annee;
     this.setYear(annee);
     setTimeout(() => {
       this.chartOptions.series = [{
@@ -212,7 +212,38 @@ export class BiComponent implements OnInit {
         this.monthTmp[10].margin,
         this.monthTmp[11].margin]
       }]
+      this.myYearButton = false
     }, 9000);
+   
+    setTimeout(() => {
+      this.nbrSeconde = 8
+    }, 1000)
+    setTimeout(() => {
+      this.nbrSeconde = 7
+    }, 2000)
+    setTimeout(() => {
+      this.nbrSeconde = 6
+    }, 3000)
+    setTimeout(() => {
+      this.nbrSeconde = 5
+    }, 4000)
+    setTimeout(() => {
+      this.nbrSeconde = 4
+    }, 5000)
+    setTimeout(() => {
+      this.nbrSeconde = 3
+    }, 6000)
+    setTimeout(() => {
+      this.nbrSeconde = 2
+    }, 7000)
+    setTimeout(() => {
+      this.nbrSeconde = 1
+    }, 8000)
+    setTimeout(() => {
+      this.nbrSeconde = 9
+    }, 9000)
+    
+    
   }
 
   convertTimeStamp(timeStamp): String {
@@ -245,7 +276,6 @@ export class BiComponent implements OnInit {
         date = annee.toString() + "-" + mois.toString() + "-01"
       else
         date = annee.toString() + "-12-31"
-    console.log(date)
     return date;
   }
 
@@ -298,7 +328,6 @@ export class BiComponent implements OnInit {
     for (var i = parseInt(debut); i <= actualYear; i++) {
       data[i - debut] = i;
     }
-    console.log(data);
     return data;
   }
 

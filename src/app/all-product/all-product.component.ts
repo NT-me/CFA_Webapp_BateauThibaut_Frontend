@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProductsService } from '../services/products.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class AllProductComponent implements OnInit {
 
   headers: any;
   categories: any
-  constructor(public productsService : ProductsService) {
+  constructor(public productsService : ProductsService, public router: Router) {
     this.products = [];
     this.poissons = [];
     this.coquillages = [];
@@ -31,24 +32,25 @@ export class AllProductComponent implements OnInit {
     },
     (err) => {
       alert('failed');
+      this.router.navigate(['/home']);
     });
     this.productsService.getInfoAllPoissonsProducts().subscribe(data => {
       this.poissons = data;
     },
     (err) => {
-      alert('failed');
+      this.router.navigate(['/home']);
     });
     this.productsService.getInfoAllCoquillagesProducts().subscribe(data => {
       this.coquillages = data;
     },
     (err) => {
-      alert('failed');
+      this.router.navigate(['/home']);
     });
     this.productsService.getInfoAllCrustacesProducts().subscribe(data => {
       this.crustaces = data;
     },
     (err) => {
-      alert('failed');
+      this.router.navigate(['/home']);
     });
   }
 
