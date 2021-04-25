@@ -18,9 +18,9 @@ export class ManageStockComponent implements OnInit {
 
   modificationList: any
 
-  regex: any;
-  headers: any;
-  categories: any;
+  regex: RegExp;
+  headers: Array<String>;
+  categories: Array<String>;
 
   constructor(public productsService: ProductsService, public manageProduct: ManageProductsService, public router: Router) {
     this.products = [];

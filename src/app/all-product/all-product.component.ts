@@ -14,8 +14,8 @@ export class AllProductComponent implements OnInit {
   coquillages: any;
   crustaces: any;
 
-  headers: any;
-  categories: any
+  headers: Array<string>;
+  categories: Array<string>;
   constructor(public productsService : ProductsService, public router: Router) {
     this.products = [];
     this.poissons = [];

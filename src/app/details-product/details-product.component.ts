@@ -14,14 +14,12 @@ export class DetailsProductComponent implements OnInit {
   poissons: any;
   coquillages: any;
   crustaces: any;
-
-  headers: any;
-  categories: any
+  headers: Array<String>;
+  categories: Array<String>
   product: any;
   myId: any;
-  regex: any
-
-  button: any
+  regex: RegExp
+  button: boolean
 
   constructor(public productsService: ProductsService, public manageProduct: ManageProductsService, public router: Router) {
     this.products = [];

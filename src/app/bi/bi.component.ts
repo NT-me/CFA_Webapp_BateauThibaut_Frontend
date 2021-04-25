@@ -1,15 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BiService } from '../services/bi.service';
-import { filter, map } from "rxjs/operators";
 import {
   ApexAxisChartSeries,
   ApexChart,
   ChartComponent,
   ApexDataLabels,
   ApexPlotOptions,
-  ApexYAxis,
-  ApexTitleSubtitle,
   ApexXAxis,
   ApexFill
 } from "ng-apexcharts";
@@ -34,24 +31,29 @@ export type ChartOptions = {
 
 export class BiComponent implements OnInit {
 
-  annéeOuverture: any;
-  annees: any;
-  allHistory: any;
-  transactions: any;
-  relativeRevenue: any;
-  total: any;
-  headers: any;
-  annee: any;
-  hidden: any;
-  taxes: any;
-
-  dateFin: any;
-  dateDebut: any;
-  category: any;
-  type: any;
-  revenue: any;
-  margin: any;
+  annéeOuverture: string;
+  annees: Array<string>;
+  allHistory: Array<string>;
+  transactions: Array<string>;
+  relativeRevenue: Array<string>;
+  total: string;
+  headers: Array<string>;
+  annee: number;
+  hidden: boolean;
+  taxes: string;
+  dateFin: string;
+  dateDebut: string;
+  category: string;
+  type: string;
+  revenue: string;
+  margin: string;
   sale: boolean;
+  monthTmp: any;
+  displayAble: boolean;
+  myYearButton: boolean;
+  nbrSeconde: number;
+  myYearClicked: String;
+
 
   filters = new FormGroup({
     category: new FormControl(''),
@@ -65,27 +67,22 @@ export class BiComponent implements OnInit {
     ])
   });
 
-  monthTmp: any;
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
-  displayAble: boolean;
-  myYearButton: boolean;
-  nbrSeconde: number;
-  myYearClicked: any;
+  
   constructor(public biService: BiService, private fb: FormBuilder, public router: Router) {
     this.annéeOuverture = "2018";
     this.allHistory = [];
     this.transactions = [];
+
     this.relativeRevenue = [];
     this.headers = ["Date", "Nom", "Quantité", "Type transaction", "Gain", "Perte"];
     this.displayAble = false;
     this.category = "";
+
     this.type = "";
-    this.headers = ["Date", "Nom", "Quantité", "Type transaction", "Gain", "Perte"]
-
     this.monthTmp = [];
-
     this.myYearButton = false
     this.nbrSeconde = 9
 
@@ -107,7 +104,7 @@ export class BiComponent implements OnInit {
       plotOptions: {
         bar: {
           dataLabels: {
-            position: "top" // top, center, bottom
+            position: "top"
           }
         }
       },
@@ -173,7 +170,7 @@ export class BiComponent implements OnInit {
 
   }
 
-  setYear(year) {
+  setYear(year: String): void {
     for (let i = 0; i < 12; i++) {
       let request = this.biService.getInfoHistoryByDate(this.convertToTimeStamp(year, i + 1), this.convertToTimeStamp(year, i + 2))
       this.biService.getInfosFiltered(request + "&revenue=true").subscribe(
@@ -190,7 +187,7 @@ export class BiComponent implements OnInit {
 
     }
   }
-  setValueGraph(annee) {
+  setValueGraph(annee): void {
     this.myYearButton = true
     this.myYearClicked = annee;
     this.setYear(annee);
@@ -267,19 +264,19 @@ export class BiComponent implements OnInit {
       return '0';
   }
 
-  convertToTimeStamp(annee, mois): String {
+  convertToTimeStamp(annee: String, mois: Number): String {
     let date = "";
     if (mois < 10)
-      date = annee.toString() + "-0" + mois.toString() + "-01"
+      date = annee + "-0" + mois.toString() + "-01"
     else
       if (mois <= 12)
-        date = annee.toString() + "-" + mois.toString() + "-01"
+        date = annee + "-" + mois.toString() + "-01"
       else
-        date = annee.toString() + "-12-31"
+        date = annee + "-12-31"
     return date;
   }
 
-  submitForm() {
+  submitForm(): void {
     let request = this.biService.getInfoHistoryByDate(this.dateDebut, this.dateFin);
     if (Date.parse(this.dateDebut) - Date.parse(this.dateFin) > 0) {
       alert("La date de fin ne peut être antérieur à la date de début");
