@@ -14,22 +14,20 @@ export class DetailsProductComponent implements OnInit {
   poissons: any;
   coquillages: any;
   crustaces: any;
-
-  headers: any;
-  categories: any
+  headers: Array<String>;
+  categories: Array<String>
   product: any;
   myId: any;
-  regex: any
+  regex: RegExp
+  button: boolean
 
-  button: any
-
-  constructor(public productsService: ProductsService, public manageProduct: ManageProductsService) {
+  constructor(public productsService: ProductsService, public manageProduct: ManageProductsService, public router: Router) {
     this.products = [];
     this.poissons = [];
     this.coquillages = [];
     this.crustaces = [];
-    this.regex = new RegExp(/[^-]\d[^-]/i);
-    this.button = true;
+    this.regex = new RegExp(/[0-9]?[0-9]?[0-9]/i);
+    this.button = false;
 
     this.headers = ["Nom", "Prix", "Prix en promotion", "Pourcentage de promotion", "Quantité en stock", "Commentaires"];
     this.categories = ["Poissons", "Coquillages", "Crustacés"]
@@ -43,7 +41,9 @@ export class DetailsProductComponent implements OnInit {
     },
       (err) => {
         alert('failed');
-      });
+        this.router.navigate(['/home']);
+      }
+    );
 
   }
 
@@ -54,20 +54,17 @@ export class DetailsProductComponent implements OnInit {
   afficherOne(id) {
     this.productsService.getInfoProduct(id).subscribe(data => {
       this.product = data;
-    },
-      (err) => {
-        alert('failed');
-      });
+    })
   }
 
   redize(value) {
     let input = document.getElementById('input');
-    if ((value != "" && !value.match(this.regex)) || parseInt(value) >= 101) {
+    if ((value != "" && !value.match(this.regex)) || parseInt(value) >= 101 || parseInt(value) < 0) {
       input.style.backgroundColor = 'red';
-      this.button = false;
+      this.button = true;
     } else {
       input.style.backgroundColor = 'white';
-      this.button = true;
+      this.button = false;
     }
   }
 

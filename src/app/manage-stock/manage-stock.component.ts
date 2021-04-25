@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ManageProductsService } from '../services/manage-products.service';
 import { ProductsService } from '../services/products.service';
 
@@ -17,11 +18,11 @@ export class ManageStockComponent implements OnInit {
 
   modificationList: any
 
-  regex: any;
-  headers: any;
-  categories: any;
+  regex: RegExp;
+  headers: Array<String>;
+  categories: Array<String>;
 
-  constructor(public productsService: ProductsService, public manageProduct: ManageProductsService) {
+  constructor(public productsService: ProductsService, public manageProduct: ManageProductsService, public router: Router) {
     this.products = [];
     this.poissons = [];
     this.coquillages = [];
@@ -32,7 +33,7 @@ export class ManageStockComponent implements OnInit {
 
     this.headers = ["Nom", "Prix", "Prix en promotion", "Pourcentage de promotion", "Quantité en stock", "Commentaires", "Ajouter Stock", "Retrait Stock", "Prix de revente", "Ajouter Promo"];
     this.categories = ["Poissons", "Coquillages", "Crustacés"]
-    this.regex = new RegExp(/[^-]\d[^-]/i);
+    this.regex = new RegExp(/[0-9]?[0-9]?[0-9]/i);
   }
 
   ngOnInit(): void {
@@ -41,24 +42,25 @@ export class ManageStockComponent implements OnInit {
     },
       (err) => {
         alert('failed');
+        this.router.navigate(['/home']);
       });
     this.productsService.getInfoAllPoissonsProducts().subscribe(data => {
       this.poissons = data;
     },
       (err) => {
-        alert('failed');
+        this.router.navigate(['/home']);
       });
     this.productsService.getInfoAllCoquillagesProducts().subscribe(data => {
       this.coquillages = data;
     },
       (err) => {
-        alert('failed');
+        this.router.navigate(['/home']);
       });
     this.productsService.getInfoAllCrustacesProducts().subscribe(data => {
       this.crustaces = data;
     },
       (err) => {
-        alert('failed');
+        this.router.navigate(['/home']);
       });
   }
 
@@ -82,7 +84,7 @@ export class ManageStockComponent implements OnInit {
 
   ajoutStock(value, id) {
     var input = document.getElementById('AjoutStock' + id);
-    if (value != "" && !value.match(this.regex)) {
+    if (value != "" && !value.match(this.regex) || parseInt(value) < 0) {
       input.style.backgroundColor = 'red';
       return;
     }
@@ -100,24 +102,25 @@ export class ManageStockComponent implements OnInit {
   retireStock(price, stock, retrait, id) {
     var revente = document.getElementById('Revente' + id);
     var ret = document.getElementById('RetireStock' + id);
-    let verifRetrait = (retrait != "" && !retrait.match(this.regex));
-    let verifPrice = (price != "" && !price.match(this.regex));
+    let verifRetrait = (retrait != "" && !retrait.match(this.regex) || parseInt(retrait) < 0);
+    let verifPrice = (price != "" && !price.match(this.regex) || parseInt(price) < 0);
 
     console.log("price = "+price)
     console.log("stock = "+stock)
     console.log("retrait = "+retrait)
 
-    if(verifRetrait && verifPrice){
+    if(verifRetrait && verifPrice ){
       ret.style.backgroundColor = 'red';
       revente.style.backgroundColor = 'red';
       return;
     }
     if(verifRetrait && !verifPrice){
       ret.style.backgroundColor = 'red';
-      return
+      revente.style.backgroundColor = 'red';
+      return;
     }
     if (verifPrice && !verifRetrait) {
-      revente.style.backgroundColor = 'red';
+      ret.style.backgroundColor = 'red';
       return;
     }
     ret.style.backgroundColor = 'white';
@@ -146,6 +149,7 @@ export class ManageStockComponent implements OnInit {
     }
     else {
       ret.style.backgroundColor = 'red';
+      revente.style.backgroundColor = 'red';
       return;
     }
   }
@@ -153,7 +157,7 @@ export class ManageStockComponent implements OnInit {
   changeDiscount(value, id) {
     var input = document.getElementById('discount' + id);
     input.style.backgroundColor = 'white';
-    if ((value != "" && !value.match(this.regex)) || parseInt(value) >= 101) {
+    if ((value != "" && !value.match(this.regex)) || parseInt(value) >= 101 || parseInt(value) < 0) {
       input.style.backgroundColor = 'red';
       return;
     } else {
@@ -163,15 +167,4 @@ export class ManageStockComponent implements OnInit {
       })
     }
   }
-
-  /*manageInput(v){
-    var bt = document.getElementById('btSubmit');
-        if (v >= 0) {
-            bt.disabled = false;
-        }
-        else {
-            bt.disabled = true;
-        }
-      }
-      */
 }

@@ -21,12 +21,6 @@
                <td><input type="text" id="Revente{{product.id}}" placeholder="..." #newItem ></td>
                <td><input type="text" id="RetireStock{{product.id}}" placeholder="..." (change)="retireStock($event.target.value, product.quantityInStock, newItem.value, product.id)"></td>
                <td><input type="text" id="discount{{product.id}}" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
-<!--
-                <td><input type="text" placeholder="..." (change)="ajoutStock($event.target.value, product.id)"></td>
-               <td><input type="text" placeholder="..." #newItem (change)="manageInput(newItem.value)"></td>
-               <td><input type="text" placeholder="..." [disabled]="test" (change)="retireStock($event.target.value, newItem.value, product.id)"></td>
-               <td><input type="text" placeholder="%" (change)="changeDiscount($event.target.value, product.id)"></td>
-               -->
          </tr>
          </table>
    </div>
